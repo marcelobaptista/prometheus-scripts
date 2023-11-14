@@ -155,7 +155,8 @@ Wants=network-online.target
 [Service]
 User=node_exporter
 Group=node_exporter
-Restart=simple
+Restart=on-failure
+type=simple
 RestartSec=3
 EnvironmentFile=-/opt/node_exporter/node_exporter.conf
 ExecStart=/opt/node_exporter/node_exporter $NODE_EXPORTER_ARGS 

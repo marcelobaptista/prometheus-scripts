@@ -10,5 +10,8 @@ if getent group node_exporter >/dev/null; then
   groupdel node_exporter
 fi
 
+# Remove o diretório '/opt/node_exporter'
 rm -rfv /opt/node_exporter
+
+# Recarrega o daemon do systemd
 systemctl daemon-reload

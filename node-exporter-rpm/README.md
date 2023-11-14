@@ -7,6 +7,7 @@ Este script Bash simplifica o processo de compilação e empacotamento do Node E
 Antes de utilizar este script, certifique-se de que os seguintes requisitos estejam instalados no seu sistema:
 
 - [Git](https://git-scm.com/)
+- [Go](https://go.dev/dl/)
 - [NFPM](https://nfpm.goreleaser.com/)
 
 ## Como Usar
@@ -14,8 +15,8 @@ Antes de utilizar este script, certifique-se de que os seguintes requisitos este
 - Clone o Repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/.git
-cd repositorio
+git clone https://github.com/marcelobaptista/scripts.git
+cd scripts/node-exporter-rpm
 ```
 
 - Edite o arquivo build-rpm.sh preenchendo os valores desejados nas variáveis
