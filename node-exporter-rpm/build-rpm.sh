@@ -16,7 +16,7 @@ cd temp && git clone https://github.com/prometheus/node_exporter.git
 # Remove coletores de outros SO
 find node_exporter/collector -type f \( -name "*bsd*" -o -name "*darwin*" -o -name "*dragonfly*" -o -name "*solaris*" \) -exec rm {} \;
 
-# Remove coletores não padrão (desabilitados) do Node Exporter. Altere conforme necessário
+# Remove coletores não padrão (desabilitados) do Node Exporter, exceto systemd. Altere conforme necessário
 # https://github.com/prometheus/node_exporter#disabled-by-default
 rm -rf node_exporter/collector/fixtures/{ethtool,qdisc,wifi}
 rm -rf node_exporter/collector/buddyinfo.go \
