@@ -1,3 +1,40 @@
+# Node Exporter install script
+
+Este script Bash que simplifica a instalação do Node Exporter em distribuições Linux.
+
+## Pré-requisitos
+
+Certifique-se de ter instalado o seguinte:
+
+- [curl](https://curl.se/download.html): para baixar o Node Exporter e suas dependências.
+- Acesso de administrador (`sudo` ou root) para executar comandos.
+
+## Como usar
+
+1. **Faça o download do script:** Clone este repositório ou baixe o script `install_node_exporter.sh`.
+
+2. **Execute o script:**
+
+    ```bash
+    sudo bash install_node_exporter.sh
+    ```
+
+    Certifique-se de fornecer permissões de execução se necessário:
+
+    ```bash
+    sudo chmod +x install_node_exporter.sh
+    ```
+
+3. **Verifique o serviço:**
+
+    Após a instalação, verifique se o serviço do Node Exporter está em execução:
+
+    ```bash
+    systemctl status node_exporter
+    ```
+
+
+
 # Node Exporter RPM Build Script
 
 Este script Bash simplifica o processo de compilação e empacotamento do Node Exporter em um pacote RPM, facilitando a instalação e configuração em sistemas baseados em Red Hat.
@@ -23,7 +60,7 @@ cd scripts/node-exporter-rpm
 - Execute o Script:
 
 ```bash
-./build-rpm.sh
+./build-node_exporter-rpm.sh
 ```
 
 Isso realizará as seguintes etapas:
@@ -35,9 +72,15 @@ Isso realizará as seguintes etapas:
     - Cria um pacote RPM utilizando a ferramenta NFPM na pasta RPMs.
     - Gera um serviço systemd para iniciar o Node Exporter como um serviço do sistema.
 
+## Após gerar o RPM
+
 - Copie o arquivo .rpm para sua máquina
 - Instale o Pacote RPM (exemplo):
 
 ```bash
+# com o comando rpm
 sudo rpm -ivh node_exporter-1.7.0.x86_64.rpm
+
+# com o gerenciador yum
+sudo yum install node_exporter-1.7.0.x86_64.rpm
 ```
