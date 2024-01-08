@@ -17,8 +17,12 @@ cd temp && git clone https://github.com/prometheus/node_exporter.git
 # Remove coletores de outros SO
 find node_exporter/collector -type f \( -name "*bsd*" -o -name "*darwin*" -o -name "*dragonfly*" -o -name "*solaris*" \) -exec rm {} \;
 
-# Remove coletores não padrão (desabilitados) do Node Exporter, exceto systemd. Altere conforme necessário
+# Coletores não padrão (desabilitados) do Node Exporter.
+# Para manter um coletor, remova a linha correspondente.
+# Para remover um coletor, mantenha a linha correspondente.
 # https://github.com/prometheus/node_exporter#disabled-by-default
+
+# Removendo coletores específicos:
 rm -rf node_exporter/collector/fixtures/{ethtool,qdisc,wifi}
 rm -rf node_exporter/collector/buddyinfo.go \
     node_exporter/collector/cgroups_linux.go \
@@ -50,15 +54,19 @@ rm -rf node_exporter/collector/buddyinfo.go \
     node_exporter/collector/softirqs_common.go \
     node_exporter/collector/supervisord.go \
     node_exporter/collector/sysctl_linux.go \
+    node_exporter/collector/systemd_linux.go \
+    node_exporter/collector/systemd_linux_test.go \
     node_exporter/collector/tcpstat_linux.go \
     node_exporter/collector/tcpstat_linux_test.go \
     node_exporter/collector/wifi_linux.go \
     node_exporter/collector/zoneinfo_linux.go
 
 # Coletores padrão do Node Exporter.
-# Descomente para remover coletores conforme necessário e se saber o que está fazendo.
-# https://github.com/prometheus/node_exporter#disabled-by-default
+# Para manter um coletor, remova a linha correspondente.
+# Para remover um coletor, mantenha a linha correspondente.
+# Consulte: https://github.com/prometheus/node_exporter#enabled-by-default
 
+# Removendo coletores específicos:
 # rm -rf node_exporter/collector/arp_linux.go \
 #     node_exporter/collector/bcache_linux.go \
 #     node_exporter/collector/bonding_linux.go \
@@ -159,7 +167,7 @@ Group=node_exporter
 Restart=on-failure
 type=simple
 RestartSec=3
-EnvironmentFile=-/opt/node_exporter/node_exporter.conf
+EnvironmentFile=/opt/node_exporter/node_exporter.conf
 ExecStart=/opt/node_exporter/node_exporter $OPTIONS 
 ExecReload=/bin/kill -HUP $MAINPID
 NoNewPrivileges=true

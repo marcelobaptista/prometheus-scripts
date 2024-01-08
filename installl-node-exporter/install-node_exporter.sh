@@ -1,6 +1,9 @@
 #!/bin/bash
 
+# Diretório de instalação do Node Exporter
 bin_dir="/opt/node_exporter"
+
+# Baixa a última versão do Node Exporter e extrai a versão
 version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep tag_name | cut -d '"' -f 4)
 node_exporter_version=$(echo "${version}" | cut -d 'v' -f 2)
 
