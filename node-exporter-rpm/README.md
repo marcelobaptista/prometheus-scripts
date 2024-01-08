@@ -15,7 +15,7 @@ Antes de utilizar este script, certifique-se de que os seguintes requisitos este
 1. **Clone o Repositório:**
 
 ```bash
-git clone https://github.com/marcelobaptista/scripts.git
+git clone https://github.com/marcelobaptista/prometheus-scripts.git
 cd scripts/node-exporter-rpm
 ```
 

@@ -14,7 +14,7 @@ Certifique-se de ter instalado o seguinte:
 1. **Baixe o arquivo** `install_node_exporter.sh`:
 
 ```bash
-wget https://raw.githubusercontent.com/marcelobaptista/scripts/main/node-exporter-rpm/install-node_exporter.sh
+wget https://raw.githubusercontent.com/marcelobaptista/prometheus-scripts/main/node-exporter-rpm/install-node_exporter.sh
 ```
 
 2. **Execute o script:**
