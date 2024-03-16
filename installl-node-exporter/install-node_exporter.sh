@@ -46,8 +46,7 @@ chmod 664 /etc/systemd/system/node_exporter.service
 
 # Cria arquivo de configuração do Node Exporter
 cat <<"EOF" >"${bin_dir}/node_exporter.conf"
-OPTIONS="--web.disable-exporter-metrics \
---web.listen-address=:9100"
+OPTIONS="--web.listen-address=:9100"
 EOF
 
 # Cria o usuário e grupo do Node Exporter

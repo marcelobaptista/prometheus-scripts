@@ -11,10 +11,17 @@ Certifique-se de ter instalado o seguinte:
 
 ## Como usar
 
+### Instalação automática
+
+```bash
+curl -s https://raw.githubusercontent.com/marcelobaptista/prometheus-scripts/main/installl-node-exporter/install-node_exporter.sh | sudo bash
+```
+### Instalação manual
+
 1. **Baixe o arquivo** `install_node_exporter.sh`:
 
 ```bash
-wget https://raw.githubusercontent.com/marcelobaptista/prometheus-scripts/main/node-exporter-rpm/install-node_exporter.sh
+wget https://raw.githubusercontent.com/marcelobaptista/prometheus-scripts/main/installl-node-exporter/install-node_exporter.sh
 ```
 
 2. **Execute o script:**
@@ -23,7 +30,7 @@ wget https://raw.githubusercontent.com/marcelobaptista/prometheus-scripts/main/n
 sudo bash install_node_exporter.sh
 ```
 
-Certifique-se de fornecer permissões de execução se necessário:
+Certifique-se de fornecer permissões de execução:
 
 ```bash
 sudo chmod +x install_node_exporter.sh
