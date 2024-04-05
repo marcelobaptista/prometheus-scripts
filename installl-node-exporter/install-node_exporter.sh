@@ -19,6 +19,11 @@ i386) arch="386" ;;
     ;;
 esac
 
+# Solicitação da porta ao usuário
+printf "Porta a ser usada pelo Node Exporter (padrão: 9100): "
+read -r port
+port=${port:-9100}  # Define o valor padrão para 9100 caso o usuário não forneça nenhum valor
+
 # Baixa a última versão do Node Exporter e extrai a versão
 version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep tag_name | cut -d '"' -f 4)
 node_exporter_version=$(echo "${version}" | cut -d 'v' -f 2)
@@ -61,17 +66,21 @@ EOF
 chmod 664 /etc/systemd/system/node_exporter.service
 
 # Cria arquivo de configuração do Node Exporter
-cat <<"EOF" >"${bin_dir}/node_exporter.conf"
+cat <<EOF >"${bin_dir}/node_exporter.conf"
 OPTIONS="--web.disable-exporter-metrics \
---web.listen-address=:9100"
+--web.listen-address=:${port}"
 EOF
 
-# Cria o usuário e grupo do Node Exporter
-useradd --no-create-home --shell /bin/false node_exporter &&
-    chown -R node_exporter:node_exporter "${bin_dir}"
+# Cria o usuário e grupo do Node Exporter caso não exista
+if ! id -u node_exporter &>/dev/null; then
+    useradd --no-create-home --shell /bin/false node_exporter &&
+        chown -R node_exporter:node_exporter "${bin_dir}"
+fi
 
-# Cria link simbólico para o binário do Node Exporter
-ln -s "${bin_dir}/node_exporter" /usr/bin/node_exporter
+# Cria link simbólico para o binário do Node Exporter no diretório /usr/bin caso não exista
+if ! [ -e "/usr/bin/node_exporter" ]; then
+    ln -s "${bin_dir}/node_exporter" /usr/bin/node_exporter
+fi
 
 # Habilita e inicia o serviço do Node Exporter
 systemctl daemon-reload && systemctl enable --now node_exporter.service
