@@ -22,7 +22,9 @@ esac
 # Solicitação da porta ao usuário
 printf "Porta a ser usada pelo Node Exporter (padrão: 9100): "
 read -r port
-port=${port:-9100}  # Define o valor padrão para 9100 caso o usuário não forneça nenhum valor
+
+# Define o valor padrão para 9100 caso o usuário não forneça nenhum valor
+port=9100
 
 # Baixa a última versão do Node Exporter e extrai a versão
 version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep tag_name | cut -d '"' -f 4)
@@ -52,7 +54,7 @@ Restart=on-failure
 Type=simple
 RestartSec=3
 EnvironmentFile=${bin_dir}/node_exporter.conf
-ExecStart=${bin_dir}/node_exporter \$OPTIONS 
+ExecStart=${bin_dir}/node_exporter \$OPTIONS    
 ExecReload=/bin/kill -HUP \$MAINPID
 NoNewPrivileges=true
 PrivateTmp=true
