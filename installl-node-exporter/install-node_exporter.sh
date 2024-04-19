@@ -20,11 +20,17 @@ i386) arch="386" ;;
 esac
 
 # Solicitação da porta ao usuário
-printf "Porta a ser usada pelo Node Exporter (padrão: 9100): "
-read -r port
+while true; do
+    printf "Porta a ser usada pelo Node Exporter (padrão: 9100): "
+    read -r port
 
-# Define o valor padrão para 9100 caso o usuário não forneça nenhum valor
-port=9100
+    # Verifica se o usuário digitou uma porta válida
+    if [[ -n $port && $port =~ ^[0-9]+$ ]]; then
+        break
+    else
+        echo "Por favor, digite um número de porta válido."
+    fi
+done
 
 # Baixa a última versão do Node Exporter e extrai a versão
 version=$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | grep tag_name | cut -d '"' -f 4)
@@ -36,8 +42,17 @@ curl -LO "https://github.com/prometheus/node_exporter/releases/download/${versio
 # Descompacta o Node Exporter
 tar -xvf node_exporter-"${node_exporter_version}.linux-${arch}.tar.gz"
 
-# Copia o binário do Node Exporter
-mkdir -p /opt/node_exporter
+# Verifica se o diretório de destino existe, se não existir, cria
+if [ ! -d "${bin_dir}" ]; then
+    mkdir -p "${bin_dir}"
+fi
+
+# Verifica se o binário do Node Exporter já existe no local
+if [ -e "${bin_dir}/node_exporter" ]; then
+    rm "${bin_dir}/node_exporter"
+fi
+
+# Copia o binário do Node Exporter para o diretório de instalação
 cp node_exporter-"${node_exporter_version}.linux-${arch}/node_exporter" "${bin_dir}"
 
 # Cria o serviço do Node Exporter
@@ -68,6 +83,7 @@ EOF
 chmod 664 /etc/systemd/system/node_exporter.service
 
 # Cria arquivo de configuração do Node Exporter
+# Consulte https://github.com/prometheus/node_exporter para mais opções de configuração
 cat <<EOF >"${bin_dir}/node_exporter.conf"
 OPTIONS="--web.disable-exporter-metrics \
 --web.listen-address=:${port}"
