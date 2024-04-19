@@ -8,6 +8,9 @@ build_user=marcelo@casa
 # A variável $tags aceita espaços em branco.
 tags="tags"
 
+# Porta a ser usada pelo Node Exporter
+port=9100
+
 # Diretório de instalação do Node Exporter a ser configurado no arquivo de serviço do Systemd
 bin_dir="/opt/node_exporter"
 
@@ -184,7 +187,7 @@ WantedBy=multi-user.target
 EOF
 
 # Cria arquivo de configuração do Node Exporter
-cat <<"EOF" >node_exporter.conf
+cat <<EOF >node_exporter.conf
 OPTIONS="--web.disable-exporter-metrics \
---web.listen-address=:9100"
+--web.listen-address=:${port}"
 EOF
