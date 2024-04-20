@@ -25,7 +25,7 @@ Certifique-se de ter instalado o seguinte:
 ```bash
 curl -s https://raw.githubusercontent.com/marcelobaptista/prometheus-scripts/main/installl-node-exporter/install-node_exporter.sh | sudo bash
 ```
-### Instalação manual
+### Instalação manual (personalizado)
 
 1. **Baixe o arquivo** `install_node_exporter.sh`:
 
