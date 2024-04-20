@@ -1,0 +1,40 @@
+name: "node_exporter"
+arch: "amd64"
+platform: "linux"
+version: 1.7.0
+maintainer: "Prometheus"
+description: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels, written in Go with pluggable metric collectors.
+vendor: "Prometheus"
+homepage: "https://github.com/prometheus/node_exporter"
+license: "Apache-2.0"
+provides:
+  - "node_exporter"
+contents:
+  - src: ./node_exporter
+    dst: /opt/node_exporter/node_exporter
+    file_info:
+      mode: 0755
+
+  - src: /opt/node_exporter/node_exporter
+    dst: /usr/bin/node_exporter
+    type: symlink
+    file_info:
+      mode: 0755
+
+  - src: ./node_exporter.conf
+    dst: /opt/node_exporter/node_exporter.conf
+    file_info:
+      mode: 0644
+
+  - src: ./node_exporter.service
+    dst: /usr/lib/systemd/system/node_exporter.service
+    file_info:
+      mode: 0644
+
+overrides:
+  rpm:
+    scripts:
+      preinstall: ./scripts/preinstall.sh
+      postinstall: ./scripts/postinstall.sh
+      preremove: ./scripts/preremove.sh
+      postremove: ./scripts/postremove.sh
