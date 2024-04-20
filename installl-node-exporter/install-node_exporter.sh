@@ -25,7 +25,10 @@ while true; do
     read -r port
 
     # Verifica se o usuário digitou uma porta válida
-    if [[ -n $port && $port =~ ^[0-9]+$ ]]; then
+    if [[ -z $port ]]; then
+        port=9100
+        break
+    elif [[ $port =~ ^[0-9]+$ ]]; then
         break
     else
         echo "Por favor, digite um número de porta válido."
@@ -54,6 +57,14 @@ fi
 
 # Copia o binário do Node Exporter para o diretório de instalação
 cp node_exporter-"${node_exporter_version}.linux-${arch}/node_exporter" "${bin_dir}"
+
+# Verifica se o arquivo de configuração do Node Exporter já existe no local
+unit_file=$(find / -name 'node_exporter.service' -print -quit)
+if [[ -n "${unit_file}" ]]; then
+    systemctl stop node_exporter
+    systemctl disable node_exporter
+    rm -f "${unit_file}"
+fi
 
 # Cria o serviço do Node Exporter
 cat <<EOF >/etc/systemd/system/node_exporter.service
