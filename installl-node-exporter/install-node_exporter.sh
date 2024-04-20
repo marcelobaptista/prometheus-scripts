@@ -3,6 +3,7 @@
 # Diretório de instalação do Node Exporter
 bin_dir="/opt/node_exporter"
 
+# Define a arquitetura do sistema
 arch=$(uname -m)
 case $arch in
 armv5*) arch="armv5" ;;

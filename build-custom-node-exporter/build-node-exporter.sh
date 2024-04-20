@@ -14,6 +14,23 @@ port=9100
 # Diretório de instalação do Node Exporter a ser configurado no arquivo de serviço do Systemd
 bin_dir="/opt/node_exporter"
 
+# Define a arquitetura do sistema
+arch=$(uname -m)
+case $arch in
+armv5*) arch="armv5" ;;
+armv6*) arch="armv6" ;;
+armv7*) arch="arm" ;;
+aarch64) arch="arm64" ;;
+x86) arch="386" ;;
+x86_64) arch="amd64" ;;
+i686) arch="386" ;;
+i386) arch="386" ;;
+*)
+    echo "Arquitetura não suportada"
+    exit 1
+    ;;
+esac
+
 rm -rf node_exporter*
 
 # Baixa o código fonte do Node Exporter
@@ -156,7 +173,7 @@ sed -i "s/Version=.*/Version=${version}/g; \
         s/-tags.*/-tags '${tags}'/g" "node_exporter/.promu.yml"
 
 # Compila o Node Exporter
-cd node_exporter && make build node_exporter
+cd node_exporter && GOARCH="${arch}" make build node_exporter
 shopt -s dotglob extglob 
 rm -rf !(node_exporter)
 
@@ -187,6 +204,7 @@ WantedBy=multi-user.target
 EOF
 
 # Cria arquivo de configuração do Node Exporter
+# Consulte https://github.com/prometheus/node_exporter para mais opções de configuração
 cat <<EOF >node_exporter.conf
 OPTIONS="--web.disable-exporter-metrics \
 --web.listen-address=:${port}"
