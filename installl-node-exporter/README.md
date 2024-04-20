@@ -20,7 +20,7 @@ Certifique-se de ter instalado o seguinte:
 
 ## Como usar
 
-### Instalação automática
+### Instalação automática (recomendado, a porta padrão é 9100)
 
 ```bash
 curl -s https://raw.githubusercontent.com/marcelobaptista/prometheus-scripts/main/installl-node-exporter/install-node_exporter.sh | sudo bash
