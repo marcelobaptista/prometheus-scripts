@@ -45,6 +45,7 @@ find node_exporter/collector -type f \( -name "*bsd*" -o -name "*darwin*" -o -na
 # https://github.com/prometheus/node_exporter#disabled-by-default
 
 # Removendo coletores específicos:
+rm -rf node_exporter/collector/fixtures/{ethtool,qdisc,wifi}
 rm -rf node_exporter/collector/buddyinfo.go \
     node_exporter/collector/cgroups_linux.go \
     node_exporter/collector/cpu_vulnerabilities_linux.go \

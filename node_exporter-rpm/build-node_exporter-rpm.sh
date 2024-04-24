@@ -176,7 +176,7 @@ sed -i "s/Version=.*/Version=${version}/g; \
 # Compila o Node Exporter
 make -C node_exporter build GOOS=linux GOARCH="${arch}"
 
-# Cria o serviço do Node Exporter
+# Cria o arquivo do serviço do Node Exporter para o Systemd
 cat <<EOF >../node_exporter.service
 [Unit]
 Description=Node Exporter
